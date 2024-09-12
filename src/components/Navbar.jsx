@@ -11,23 +11,21 @@ import Wishlist from './Wishlist';
 const Navbar = () => {
   const [showAuthForm, setShowAuthForm] = useState(false);
   const [activeTab, setActiveTab] = useState('login');
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Track user login state
-  const [userProfile, setUserProfile] = useState(null); // Store user profile info
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
   const [showCart, setShowCart] = useState(false);
   const [showWishlist, setShowWishlist] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
 
-  // Handle login success
   const handleLoginSuccess = (profile) => {
     setIsAuthenticated(true);
-    setUserProfile(profile); // Set the user profile data (mock)
-    setShowAuthForm(false);  // Close the login/signup form
+    setUserProfile(profile);
+    setShowAuthForm(false);
   };
 
-  // Handle logout
   const handleLogout = () => {
     setIsAuthenticated(false);
-    setUserProfile(null);  // Clear profile data on logout
+    setUserProfile(null);
   };
 
   const toggleAuthForm = (formType) => {
@@ -51,7 +49,7 @@ const Navbar = () => {
             <a href="#" className="nav-link">BRANDS</a>
           </div>
           <div className="navbar-logo">
-            <a href="#">HEAVENLY</a>
+            <img className='main-logo' src="/src/assets/logo.png" alt="Logo" />
           </div>
           <div className="navbar-icons">
             <a className="nav-icon" onClick={toggleSearchBar}>
@@ -95,12 +93,12 @@ const Navbar = () => {
             {activeTab === 'login' ? (
               <Login
                 switchToSignup={() => toggleAuthForm('signup')}
-                onLoginSuccess={handleLoginSuccess} // Pass login success handler
+                onLoginSuccess={handleLoginSuccess}
               />
             ) : (
               <Signup
                 switchToLogin={() => toggleAuthForm('login')}
-                onSignupSuccess={handleLoginSuccess} // Pass signup success handler
+                onSignupSuccess={handleLoginSuccess}
               />
             )}
           </div>
