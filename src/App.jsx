@@ -4,22 +4,25 @@ import Navbar from './components/Navbar';
 import LoginPage from './components/Login';
 import SignupPage from './components/Signup';
 import Footer from './components/Footer';
-
+import ProductCards from './components/ProductCard';
 
 const App = () => {
   return (
     <Router>
       <>
         <Navbar />
+        
         <Routes>
-          {/* <Route path="/" element={<LoginPage />} /> */}
+        
+          {/* Define the home route and render ProductCards there */}
+          <Route path="/" element={<ProductCards />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
         </Routes>
-        <Footer/>
+        <Footer />
       </>
     </Router>
-  );
-}
+  )
+};
 
 export default App;
