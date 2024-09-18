@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./ProductCards.css";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Link } from "react-router-dom";
 
 const ProductCards = () => {
-  const imageSize = { width: "150px", height: "150px" };
+  const imageSize = { width: "150px", height: "200px" };
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [focused, setOnFocused] = useState(true);
 
-  // console.log(products.products);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     fetchData();
@@ -20,8 +21,6 @@ const ProductCards = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get('https://mern-stack-backend-xzo3.onrender.com/getProducts');
-      console.log('responce data', response.data);
-
       setProducts(response.data.products || []);
       setFilteredProducts(response.data.products || []);
     } catch (error) {
@@ -34,12 +33,12 @@ const ProductCards = () => {
     const normalizedSearchText = searchText.toLowerCase();
     setSearchText(normalizedSearchText);
 
-    const filteredData = products.products.filter((product) =>
+    const filteredData = products.filter((product) =>
       product.name.toLowerCase().includes(normalizedSearchText)
     );
     setFilteredProducts(filteredData);
 
-    const suggestedData = products.products.filter((product) =>
+    const suggestedData = products.filter((product) =>
       product.name.toLowerCase().startsWith(normalizedSearchText)
     );
     setSuggestions(suggestedData.slice(0, 5));
@@ -56,6 +55,14 @@ const ProductCards = () => {
 
   const handleToggleBlur = () => {
     setOnFocused(false);
+  };
+
+  const addToCart = (product) => {
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    cartItems.push(product);
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+
+    navigate('/cart'); // Redirect to cart page after adding the product
   };
 
   return (
@@ -86,31 +93,35 @@ const ProductCards = () => {
       </div>
 
       <div className="cardWrapper">
-        {Array.isArray(filteredProducts) && filteredProducts.length === 0 ? (
+        {filteredProducts.length === 0 ? (
           <h1>No Products found</h1>
         ) : (
-          Array.isArray(filteredProducts) && filteredProducts.map((product, index) => {
-            return (
-              <Link
-                key={index}
-                to={`/product/${product.id}`}
-                className="mainCard"
-              >
-                <div>
+          filteredProducts.map((product, index) => (
+            <div key={index} className="mainCard">
+              <Link to={`/product/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div className="product-info">
                   <img
                     src={product?.image[0]}
                     alt={product?.name}
                     style={imageSize}
                   />
-                  <h6> {product?.name} </h6>
-                  <h4>$ {product?.price} </h4>
-                  <div>
-                    <span>{product?.description} </span>
+                  <div className="product-details">
+                    <h6>{product?.name}</h6>
+                    <div className="price-row">
+                      <h4>$ {product?.price}</h4>
+                    </div>
+                    <div className="product-description">
+                      <span>{product?.description}</span>
+                    </div>
+                    {/* Add to Cart Button Moved Here */}
+                    <button onClick={() => addToCart(product)} className="add-to-cart-btn">
+                      Add to Cart
+                    </button>
                   </div>
                 </div>
               </Link>
-            );
-          })
+            </div>
+          ))
         )}
       </div>
     </div>

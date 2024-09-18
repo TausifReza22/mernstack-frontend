@@ -1,3 +1,4 @@
+/* Search input styles */
 .search-input {
     width: 80%;
     height: 30px;
@@ -8,11 +9,10 @@
     margin: 20px auto;
 }
 
+/* Suggestions dropdown styles */
 .suggestions {
     width: 50%;
     max-height: 200px;
-    /* border: 2px solid #ccc; */
-    border-top: none;
     border-radius: 0 0 5px 5px;
     overflow-y: auto;
     background-color: #fff;
@@ -35,13 +35,13 @@
     background-color: #f0f0f0;
 }
 
+/* Top wrapper */
 .topWrapper {
     margin: 10px auto;
     text-align: center;
-
 }
 
-
+/* Card wrapper */
 .cardWrapper {
     display: flex;
     flex-wrap: wrap;
@@ -49,6 +49,7 @@
     justify-content: center;
 }
 
+/* Main card styles */
 .mainCard {
     width: 200px;
     text-align: center;
@@ -59,6 +60,7 @@
     color: #000;
 }
 
+/* Image inside the product card */
 .mainCard img {
     width: auto;
     max-height: 200px;
@@ -66,21 +68,83 @@
     border: 1px solid;
 }
 
+/* Product name */
 .mainCard h6 {
     font-size: 16px;
     margin: 10px 0;
     text-align: left;
 }
 
+/* Price */
 .mainCard h4 {
     font-size: 20px;
     color: #e74c3c;
     text-align: left;
 }
 
+/* Additional product details */
 .mainCard div {
     margin-top: 10px;
     font-size: 14px;
     color: #999;
     text-align: left;
 }
+
+/* Card wrapper (Flexbox layout) */
+.cardWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Card box shadow and layout */
+.mainCard {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    max-width: 300px;
+    text-align: left;
+    background-color: #fff;
+}
+
+/* Product info wrapper */
+.product-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Product details */
+.product-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Price row */
+.price-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+/* Add to Cart button */
+.add-to-cart-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Ensure spacing from description */
+}
+
+.add-to-cart-btn:hover {
+    background-color: #218838;
+}
+
+/* Other styles like the ones you had remain unchanged */
