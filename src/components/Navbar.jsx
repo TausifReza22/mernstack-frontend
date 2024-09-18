@@ -7,6 +7,10 @@ import Login from './Login';
 import Signup from './Signup';
 import Cart from './Cart';
 import Wishlist from './Wishlist';
+import WomenSection from './WomenSection';  // Import your section components
+import MenSection from './MenSection';
+import KidsSection from './KidsSection';
+
 
 const Navbar = () => {
   const [showAuthForm, setShowAuthForm] = useState(false);
@@ -16,6 +20,7 @@ const Navbar = () => {
   const [showCart, setShowCart] = useState(false);
   const [showWishlist, setShowWishlist] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [activeCategory, setActiveCategory] = useState(''); // State for active category
 
   const handleLoginSuccess = (profile) => {
     setIsAuthenticated(true);
@@ -38,16 +43,29 @@ const Navbar = () => {
   const toggleWishlist = () => setShowWishlist(!showWishlist);
   const toggleSearchBar = () => setShowSearchBar(!showSearchBar);
 
+  const renderCategoryContent = () => {
+    switch (activeCategory) {
+      case 'women':
+        return <WomenSection />;
+      case 'men':
+        return <MenSection />;
+      case 'kids':
+        return <KidsSection />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
       <nav className="navbar">
         <div className="navbar-content">
-          <div className="navbar-section">
-            <a href="#" className="nav-link">WOMEN</a>
-            <a href="#" className="nav-link">MEN</a>
-            <a href="#" className="nav-link">KIDS</a>
+          {/* <div className="navbar-section">
+            <a href="#" className="nav-link" onClick={() => setActiveCategory('women')}>WOMEN</a>
+            <a href="#" className="nav-link" onClick={() => setActiveCategory('men')}>MEN</a>
+            <a href="#" className="nav-link" onClick={() => setActiveCategory('kids')}>KIDS</a>
             <a href="#" className="nav-link">BRANDS</a>
-          </div>
+          </div> */}
           <div className="navbar-logo">
             <img className='main-logo' src="/src/assets/logo.png" alt="Logo" />
           </div>
@@ -104,6 +122,9 @@ const Navbar = () => {
           </div>
         </div>
       )}
+
+      {/* Render Category Content */}
+      {renderCategoryContent()}
     </>
   );
 };

@@ -60,13 +60,13 @@ const ProductCards = () => {
 
   return (
     <div onClick={handleToggleBlur} style={{ textAlign: "center" }}>
-      <input
+      {/* <input
         type="text"
         className="search-input"
         value={searchText}
         placeholder="Search Products...."
         onChange={(e) => handleSearch(e.target.value)}
-      />
+      /> */}
 
       <div className="suggestions">
         {focused &&
