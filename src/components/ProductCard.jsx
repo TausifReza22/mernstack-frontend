@@ -3,50 +3,65 @@ import axios from "axios";
 import "./ProductCards.css";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Link } from "react-router-dom";
+import { useFilter } from "./FilterContext"; // Import useFilter from the correct path
 
 const ProductCards = () => {
-  const imageSize = { width: "150px", height: "200px" };
+  const imageSize = { width: "150px", height: "150px" };
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [focused, setOnFocused] = useState(true);
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  // console.log(products.products);
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    filterProducts(); // Re-filter products when category or search text changes
+  }, [category, searchText, products]);
+
   const fetchData = async () => {
     try {
       const response = await axios.get('https://mern-stack-backend-xzo3.onrender.com/getProducts');
+      console.log('responce data', response.data);
+
       setProducts(response.data.products || []);
       setFilteredProducts(response.data.products || []);
     } catch (error) {
-      console.error("Error in fetching product list", error);
+      console.error("Product list fetch karne mein error", error);
     }
   };
 
-  const handleSearch = (searchText) => {
-    setOnFocused(true);
+  const filterProducts = () => {
     const normalizedSearchText = searchText.toLowerCase();
     setSearchText(normalizedSearchText);
 
-    const filteredData = products.filter((product) =>
+    const filteredData = products.products.filter((product) =>
       product.name.toLowerCase().includes(normalizedSearchText)
     );
-    setFilteredProducts(filteredData);
 
-    const suggestedData = products.filter((product) =>
+    console.log('searchFilteredData', searchFilteredData); // Debugging filtered data
+
+    setFilteredProducts(searchFilteredData);
+
+    const suggestedData = products.products.filter((product) =>
       product.name.toLowerCase().startsWith(normalizedSearchText)
     );
     setSuggestions(suggestedData.slice(0, 5));
   };
 
-  const handleSuggestionClick = (productTitle) => {
-    setSearchText(productTitle);
-    handleSearch(productTitle);
+  const handleSearch = (searchText) => {
+    setOnFocused(true);
+    setSearchText(searchText);
+    filterProducts(); // Reapply filters on search
+  };
+
+  const handleSuggestionClick = (productName) => {
+    setSearchText(productName);
+    handleSearch(productName);
   };
 
   const handleToggle = () => {
@@ -73,6 +88,7 @@ const ProductCards = () => {
         value={searchText}
         placeholder="Search Products...."
         onChange={(e) => handleSearch(e.target.value)}
+        onFocus={handleToggle}
       />
 
       <div className="suggestions">
@@ -81,10 +97,8 @@ const ProductCards = () => {
           suggestions.map((product, index) => (
             <div
               key={index}
-              style={{ border: "1px solid grey" }}
+              style={{ border: "1px solid grey", padding: "8px", cursor: "pointer" }}
               onClick={() => handleSuggestionClick(product.name)}
-              onFocus={handleToggle}
-              onBlur={handleToggleBlur}
               role="button"
             >
               {product.name}
@@ -93,35 +107,31 @@ const ProductCards = () => {
       </div>
 
       <div className="cardWrapper">
-        {filteredProducts.length === 0 ? (
+        {Array.isArray(filteredProducts) && filteredProducts.length === 0 ? (
           <h1>No Products found</h1>
         ) : (
-          filteredProducts.map((product, index) => (
-            <div key={index} className="mainCard">
-              <Link to={`/product/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div className="product-info">
+          Array.isArray(filteredProducts) && filteredProducts.map((product, index) => {
+            return (
+              <Link
+                key={index}
+                to={`/product/${product.id}`}
+                className="mainCard"
+              >
+                <div>
                   <img
                     src={product?.image[0]}
                     alt={product?.name}
                     style={imageSize}
                   />
-                  <div className="product-details">
-                    <h6>{product?.name}</h6>
-                    <div className="price-row">
-                      <h4>$ {product?.price}</h4>
-                    </div>
-                    <div className="product-description">
-                      <span>{product?.description}</span>
-                    </div>
-                    {/* Add to Cart Button Moved Here */}
-                    <button onClick={() => addToCart(product)} className="add-to-cart-btn">
-                      Add to Cart
-                    </button>
+                  <h6> {product?.name} </h6>
+                  <h4>$ {product?.price} </h4>
+                  <div>
+                    <span>{product?.description} </span>
                   </div>
                 </div>
               </Link>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
     </div>
