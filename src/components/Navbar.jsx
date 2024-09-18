@@ -19,6 +19,7 @@ const Navbar = () => {
   const [showCart, setShowCart] = useState(false);
   const [showWishlist, setShowWishlist] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [activeCategory, setActiveCategory] = useState(''); // State for active category
 
   const handleLoginSuccess = (profile) => {
     setIsAuthenticated(true);
@@ -90,8 +91,8 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {showCart && <Cart closeCart={toggleCart} />}
-      {showWishlist && <Wishlist closeWishlist={toggleWishlist} />}
+        {showCart && <Cart closeCart={toggleCart} />}
+        {showWishlist && <Wishlist closeWishlist={toggleWishlist} />}
 
       {showAuthForm && (
         <div className="auth-overlay" onClick={closeAuthForm}>
