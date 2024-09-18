@@ -6,11 +6,8 @@ import LoginPage from './components/Login';
 import SignupPage from './components/Signup';
 import Footer from './components/Footer';
 import ProductCards from './components/ProductCard';
-<<<<<<< HEAD
 import Cart from './components/Cart'; // Import the Cart component
-=======
 import { FilterProvider } from './components/FilterContext'; // Import FilterProvider
->>>>>>> af133a4d0cd64c5c413e1a6d416a1a5b479d6c12
 
 const App = () => {
   return (
