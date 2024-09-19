@@ -10,7 +10,7 @@ const Login = ({ switchToSignup, onLoginSuccess }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const profile = { name: 'Rohit', email };
+    const profile = { name: '', email };
     onLoginSuccess(profile);
   };
 

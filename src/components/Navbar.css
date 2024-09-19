@@ -1,11 +1,14 @@
+/* Navbar styles */
 .navbar {
   background-color: white;
-  color: white;
+  color: black; /* Ensure text color is black */
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid aliceblue;
+  z-index: 100;
+  position: relative;
 }
 
 .navbar-content {
@@ -13,7 +16,8 @@
   justify-content: space-between;
   width: 100%;
 }
-.navbar-section{
+
+.navbar-section {
   margin: 1rem;
 }
 
@@ -22,13 +26,9 @@
   margin: 0 10px;
   text-decoration: none;
   font-weight: bold;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.navbar-section a {
   position: relative;
   display: inline-block;
-  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .navbar-section a::after {
@@ -38,7 +38,7 @@
   bottom: 0;
   width: 0;
   height: 2px;
-  background-color: #000000;
+  background-color: black; /* Use black for underline */
   transition: width 0.3s ease-in-out;
 }
 
@@ -67,71 +67,39 @@
 
 .nav-icon:hover {
   color: #ff0019;
-
 }
 
-.menu-overlay {
-  position: absolute;
-  top: 60px;
-  right: 10px;
-  background-color: #fff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  z-index: 10;
-}
-
-.menu-container {
-  padding: 10px;
-}
-
-.menu-item {
-  display: block;
-  padding: 8px 16px;
-  text-align: left;
-  border: none;
-  background: none;
-  width: 100%;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.2s;
-}
-
-.menu-item:hover {
-  background-color: #f5f5f5;
-}
-
+/* Search bar styles */
 .search-bar-container {
-  position: absolute; 
-  top: 0vw;
-  left: 30vw;
+  position: absolute;
+  top: 60px; /* Adjust to align with navbar */
+  left: 30px; /* Adjust position */
   width: 50%;
-  /* padding: 10px; */
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: rgba(255, 255, 255, 0.9); */
-  /* box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); */
-  /* z-index: 1;  */
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Ensure it's above other elements */
 }
-
 
 .search-input {
-  width: 50%;
+  width: 100%; /* Ensure full width of container */
   padding: 12px 20px;
   border-radius: 25px;
-  border: 1px solid #ccc;
+  border: 1px solid #d65555;
   font-size: 16px;
   outline: none;
-  /* transition: box-shadow 0.3s ease; */
+  transition: box-shadow 0.3s ease;
 }
 
-/* .search-input:focus {
+.search-input:focus {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-} */
+}
 
 .search-button {
   padding: 10px 20px;
-  margin-left: 10px;
+  margin-left: 20px;
   background-color: #f0a500;
   border: none;
   border-radius: 25px;
@@ -145,91 +113,36 @@
   background-color: #e28e00;
 }
 
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-.main-logo{
-  width: 200px;
-  height: 50px;
-
-}
-
-
-
-.auth-overlay {
-  position: fixed;
-  top: 0;
+/* Suggestions dropdown styles */
+.suggestions {
+  width: 100%; /* Ensure it matches input width */
+  max-width: 600px; /* Ensure it doesn't exceed max-width */
+  max-height: 200px;
+  border-radius: 0 0 25px 25px;
+  overflow-y: auto;
+  background-color: rgb(124, 107, 107);
+  position: absolute;
+  z-index: 1200;
+  text-align: left;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1000; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  top: 100%; /* Position directly below the input */
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.auth-container {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-  z-index: 1001;
+.suggestion-item {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #9b7373;
+  transition: background-color 0.3s ease;
 }
 
-
-.cart-overlay, .wishlist-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.suggestion-item:hover {
+  background-color: #f0f0f0;
 }
 
-.cart-container, .wishlist-container {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-  z-index: 1001;
-}
-
-
-.footer {
-  position: relative;
-  z-index: 1;
-}
-
-.navbar {
-  background-color: white;
-  color: white;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid aliceblue;
-  z-index: 100; 
-  position: relative;
-}
-
-.navbar-content {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
+/* Authentication overlay styles */
 .auth-overlay {
   position: fixed;
   top: 0;
@@ -240,7 +153,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 200; /
+  z-index: 200;
 }
 
 .auth-container {
@@ -250,7 +163,7 @@
   max-width: 400px;
   width: 90%;
   position: relative;
-  z-index: 300; /
+  z-index: 300;
 }
 
 .close-button {
@@ -261,20 +174,33 @@
   cursor: pointer;
   border: none;
   background: none;
-  z-index: 400; /
+  z-index: 400;
 }
 
-.nav-icon {
-  margin-left: 15px;
-  color: black;
-  cursor: pointer;
-  transition: color 0.2s ease-in-out;
+/* Cart and Wishlist overlay styles */
+.cart-overlay, .wishlist-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
 }
 
-.nav-icon:hover {
-  color: #ff0019;
+.cart-container, .wishlist-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 300;
 }
 
-.menu-item:hover a {
-  color: #017A90;
+/* Footer styles */
+.footer {
+  position: relative;
+  z-index: 1;
 }

@@ -1,3 +1,4 @@
+/* Cart Overlay */
 .cart-overlay {
   position: fixed;
   top: 0;
@@ -10,14 +11,17 @@
   align-items: center;
 }
 
+/* Cart Container */
 .cart-container {
   background-color: white;
   padding: 20px;
-  width: 300px;
+  width: 320px; /* Increased width for better item display */
   border-radius: 8px;
   position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
 }
 
+/* Close Cart Button */
 .close-cart {
   position: absolute;
   top: 10px;
@@ -26,13 +30,111 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
+  color: #e74c3c; /* Added color for better visibility */
 }
 
+/* Cart Items Section */
 .cart-items {
   margin-top: 20px;
 }
 
-.cart-items p {
-  text-align: center;
-  color: gray;
+/* Cart Item */
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd; /* Border to separate items */
+}
+
+.cart-item img {
+  width: 60px; /* Adjusted width for better visual appeal */
+  height: 70px; /* Adjusted height to match image aspect */
+  object-fit: cover;
+  border-radius: 4px; /* Rounded corners for images */
+  margin-right: 15px; /* Increased margin for spacing */
+}
+
+.cart-item-details {
+  flex: 1;
+}
+
+.cart-item-name {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px; /* Added margin for spacing */
+}
+
+.cart-item-price {
+  color: #e74c3c; /* Highlight color for price */
+}
+
+.cart-item-quantity {
+  font-size: 14px;
+  color: #666; /* Darker color for quantity */
+  margin-bottom: 5px; /* Added margin for spacing */
+}
+
+.cart-item-actions {
+  display: flex;
+  align-items: center;
+}
+
+/* Increment and Decrement Buttons */
+.increment-btn, .decrement-btn {
+  background-color: #28a745; /* Green background */
+  color: white;
+  border: 1px solid #1e7e34; /* Darker green border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer;
+  font-size: 16px; /* Larger font size for visibility */
+  padding: 8px 12px; /* Increased padding for button size */
+  margin-left: 5px; /* Space between buttons */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.increment-btn:hover, .decrement-btn:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly larger on hover */
+}
+
+/* Remove Item Button */
+.remove-item-btn {
+  background-color: #dc3545; /* Red background */
+  color: white;
+  border: 1px solid #c82333; /* Darker red border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer;
+  font-size: 16px; /* Larger font size for visibility */
+  padding: 8px 12px; /* Increased padding for button size */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.remove-item-btn:hover {
+  background-color: #c82333; /* Darker red on hover */
+  transform: scale(1.05); /* Slightly larger on hover */
+}
+
+/* Cart Total */
+.cart-total {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: right;
+  color: #333; /* Dark color for better readability */
+}
+.place-order-btn {
+  background-color: #28a745; /* Green background */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px; /* Add some spacing above the button */
+}
+
+.place-order-btn:hover {
+  background-color: #218838; /* Darker green on hover */
 }

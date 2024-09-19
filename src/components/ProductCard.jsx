@@ -11,10 +11,14 @@ const ProductCards = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [focused, setOnFocused] = useState(true);
+  const [cartItems, setCartItems] = useState([]);
   const { category } = useFilter(); // Access category from context
 
   useEffect(() => {
     fetchData();
+    // Fetch cart items when component mounts
+    const items = JSON.parse(localStorage.getItem('cart')) || [];
+    setCartItems(items);
   }, []);
 
   useEffect(() => {
@@ -41,22 +45,15 @@ const ProductCards = () => {
     const normalizedSearchText = searchText.toLowerCase();
     const normalizedCategory = category?.toLowerCase(); // Normalize category value
 
-    console.log('Category:', normalizedCategory); // Debugging category
-    console.log('Search Text:', normalizedSearchText); // Debugging search text
-
     // Filter by category
     const categoryFilteredData = normalizedCategory === 'all' || !normalizedCategory
       ? products
       : products.filter((product) => product.category && product.category.toLowerCase() === normalizedCategory);
 
-    console.log('categoryFilteredData', categoryFilteredData); // Debugging filtered data
-
     // Filter by search text
     const searchFilteredData = categoryFilteredData.filter((product) =>
       product.name.toLowerCase().includes(normalizedSearchText)
     );
-
-    console.log('searchFilteredData', searchFilteredData); // Debugging filtered data
 
     setFilteredProducts(searchFilteredData);
 
@@ -86,8 +83,34 @@ const ProductCards = () => {
     setOnFocused(false);
   };
 
+  const addToCart = (product, e) => {
+    e.stopPropagation(); // Prevent click event from bubbling up to Link
+
+    // Retrieve cart items from localStorage or initialize an empty array
+    const currentCartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Check if the product already exists in the cart
+    const productIndex = currentCartItems.findIndex(item => item._id === product._id);
+
+    if (productIndex > -1) {
+      // If product exists, increment quantity
+      const updatedCartItems = currentCartItems.map((item, index) =>
+        index === productIndex ? { ...item, quantity: item.quantity + 1 } : item
+      );
+      localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+      setCartItems(updatedCartItems);
+      alert(`${product.name} quantity has been increased by 1!`);
+    } else {
+      // Add product to cart if it doesn't already exist with quantity 1
+      const updatedCartItems = [...currentCartItems, { ...product, quantity: 1 }];
+      localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+      setCartItems(updatedCartItems); // Update cartItems state
+      alert(`${product.name} has been added to your cart!`);
+    }
+  };
+
   return (
-    <div onClick={handleToggleBlur} style={{ textAlign: "center" }}>
+    <div onClick={handleToggleBlur} style={{ textAlign: "center", position: "relative" }}>
       <input
         type="text"
         className="search-input"
@@ -103,7 +126,7 @@ const ProductCards = () => {
           suggestions.map((product, index) => (
             <div
               key={index}
-              style={{ border: "1px solid grey", padding: "8px", cursor: "pointer" }}
+              className="suggestion-item"
               onClick={() => handleSuggestionClick(product.name)}
               role="button"
             >
@@ -117,12 +140,8 @@ const ProductCards = () => {
           <h1>{searchText ? 'No Products found' : 'Loading...'}</h1>
         ) : (
           filteredProducts.map((product) => (
-            <Link
-              key={product._id} // Use unique id here
-              to={`/product/${product._id}`}
-              className="mainCard"
-            >
-              <div>
+            <div key={product._id} className="mainCard">
+              <Link to={`/product/${product._id}`} className="product-link">
                 <img
                   src={product?.image[0]}
                   alt={product?.name}
@@ -133,8 +152,15 @@ const ProductCards = () => {
                 <div>
                   <span>{product?.description}</span>
                 </div>
-              </div>
-            </Link>
+              </Link>
+              {/* Add to Cart Button */}
+              <button
+                onClick={(e) => addToCart(product, e)}
+                className="add-to-cart-btn"
+              >
+                Add to Cart
+              </button>
+            </div>
           ))
         )}
       </div>
