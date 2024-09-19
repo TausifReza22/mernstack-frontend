@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Cart.css';
 
 const Cart = ({ closeCart }) => {
   const [cartItems, setCartItems] = useState([]);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
-    // Fetch cart items from localStorage when component mounts
     const items = JSON.parse(localStorage.getItem('cart')) || [];
     setCartItems(items);
   }, []);
@@ -27,21 +27,19 @@ const Cart = ({ closeCart }) => {
 
   const handleDecrement = (productId) => {
     const updatedCartItems = cartItems.map(item =>
-      item._id === productId
-        ? { ...item, quantity: Math.max(1, item.quantity - 1) }
-        : item
+      item._id === productId ? { ...item, quantity: Math.max(1, item.quantity - 1) } : item
     );
     setCartItems(updatedCartItems);
     localStorage.setItem('cart', JSON.stringify(updatedCartItems));
   };
 
-  const handlePlaceOrder = () => {
-    setShowPaymentModal(true); // Show payment modal
+  const handleBuy = () => {
+    // Navigate to the delivery page
+    navigate('/delivery');
   };
 
-  const closePaymentModal = () => {
-    setShowPaymentModal(false); // Close payment modal
-  };
+  // Calculate total amount
+  const totalAmount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
 
   return (
     <div className="cart-overlay" onClick={closeCart}>
@@ -61,46 +59,23 @@ const Cart = ({ closeCart }) => {
                   <p>Quantity: {item.quantity}</p>
                 </div>
                 <div className="cart-item-actions">
-                  <button
-                    className="decrement-btn"
-                    onClick={() => handleDecrement(item._id)}
-                  >
-                    -
-                  </button>
-                  <button
-                    className="increment-btn"
-                    onClick={() => handleIncrement(item._id)}
-                  >
-                    +
-                  </button>
-                  <button
-                    className="remove-item-btn"
-                    onClick={() => handleRemoveItem(item._id)}
-                  >
-                    Remove
-                  </button>
+                  <button className="decrement-btn" onClick={() => handleDecrement(item._id)}>-</button>
+                  <button className="increment-btn" onClick={() => handleIncrement(item._id)}>+</button>
+                  <button className="remove-item-btn" onClick={() => handleRemoveItem(item._id)}>Remove</button>
                 </div>
               </div>
             ))
           )}
         </div>
-
-        {/* Place Order Button */}
         {cartItems.length > 0 && (
-          <button className="place-order-btn" onClick={handlePlaceOrder}>
-            Place Order
-          </button>
-        )}
-
-        {/* Payment Modal */}
-        {showPaymentModal && (
-          <div className="payment-overlay">
-            <div className="payment-modal">
-              <h2>Payment Options</h2>
-              {/* Add your payment options here */}
-              <button onClick={closePaymentModal}>Close</button>
-            </div>
+          <div className="total-amount">
+            <h3>Total: ${totalAmount}</h3>
           </div>
+        )}
+        {cartItems.length > 0 && (
+          <button className="place-order-btn" onClick={handleBuy}>
+            Proceed to Payment
+          </button>
         )}
       </div>
     </div>

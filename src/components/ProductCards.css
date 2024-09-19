@@ -2,18 +2,19 @@
 .search-input {
     width: 80%;
     max-width: 600px; /* Ensure a maximum width for responsiveness */
-    height: 40px; /* Slightly larger for better accessibility */
-    padding: 10px;
+    height: 45px; /* Increased height for better accessibility */
+    padding: 12px;
     font-size: 18px;
-    border: 2px solid #ddd; /* Slightly lighter border for modern look */
+    border: 2px solid #ddd; /* Lighter border for modern look */
     border-radius: 8px; /* Rounded corners for a modern feel */
     margin: 20px auto;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: border-color 0.3s ease; /* Smooth transition effect */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Deeper shadow for more depth */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
 }
 
 .search-input:focus {
     border-color: #e74c3c; /* Highlight color on focus */
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3); /* Focus shadow */
     outline: none; /* Remove default outline */
 }
 
@@ -29,20 +30,21 @@
     z-index: 1000;
     text-align: left; /* Align text to the left for better readability */
     left: 10%; /* Align with the input */
-    top: 50px; /* Adjusted top position to align with input */
+    top: 50px; /* Adjusted top position */
     border: 1px solid #ddd; /* Border to match input */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for dropdown */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
     display: none; /* Hide initially, show via JavaScript */
 }
 
 /* Show suggestions when applicable */
 .suggestions.show {
     display: block; /* Show the dropdown when it has the 'show' class */
+    animation: fadeIn 0.3s ease; /* Fade-in animation */
 }
 
 /* Individual suggestion item styles */
 .suggestion-item {
-    padding: 10px;
+    padding: 12px; /* Increased padding for comfort */
     font-size: 16px;
     cursor: pointer;
     border-bottom: 1px solid #ddd; /* Border to match dropdown */
@@ -51,6 +53,16 @@
 
 .suggestion-item:hover {
     background-color: #f0f0f0; /* Highlight on hover */
+}
+
+/* Keyframe for fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 /* Top wrapper styles */
@@ -73,32 +85,39 @@
     width: 250px; /* Slightly wider for better display */
     text-align: center;
     border: 1px solid #ddd;
-    border-radius: 8px; /* Rounded corners for modern design */
+    border-radius: 8px; /* Rounded corners */
     padding: 15px; /* Increased padding for better spacing */
     background-color: #fff;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    overflow: hidden; /* Ensure no overflow */
 }
 
 .mainCard:hover {
-    transform: scale(1.02); /* Subtle scale effect on hover */
+    transform: scale(1.05); /* Scale effect on hover */
 }
 
 /* Image inside the product card */
 .mainCard img {
     width: 100%;
-    max-height: 180px; /* Adjusted height for consistency */
+    max-height: 180px; /* Adjusted height */
     object-fit: cover;
     border-radius: 8px; /* Rounded corners to match card */
     margin-bottom: 10px;
     border: 1px solid #ddd; /* Border to match card */
+    transition: transform 0.3s ease; /* Smooth transition for image */
+}
+
+.mainCard:hover img {
+    transform: scale(1.1); /* Slight zoom effect on image hover */
 }
 
 /* Product name */
 .mainCard h6 {
-    font-size: 18px; /* Increased font size for better readability */
+    font-size: 18px; /* Increased font size */
     margin: 10px 0;
-    text-align: center; /* Center-aligned for consistency */
+    text-align: center; /* Center-aligned */
+    color: #333; /* Darker color for better readability */
 }
 
 /* Price styling */
@@ -106,15 +125,15 @@
     font-size: 22px; /* Slightly larger for prominence */
     color: #e74c3c; /* Highlight color for price */
     margin: 10px 0;
-    text-align: center; /* Center-aligned for consistency */
+    text-align: center; /* Center-aligned */
 }
 
 /* Additional product details */
 .mainCard div {
     margin-top: 10px;
     font-size: 14px;
-    color: #666; /* Darker color for better readability */
-    text-align: center; /* Center-aligned for consistency */
+    color: #666; /* Darker color for readability */
+    text-align: center; /* Center-aligned */
 }
 
 /* Add to Cart Button Styling */
@@ -122,9 +141,9 @@
     background-color: #28a745; /* Green background */
     color: white;
     border: none;
-    padding: 12px 20px; /* Increased padding for button size */
-    font-size: 16px; /* Larger font size for visibility */
-    border-radius: 5px; /* Rounded corners for modern design */
+    padding: 12px 20px; /* Increased padding */
+    font-size: 16px; /* Larger font size */
+    border-radius: 5px; /* Rounded corners */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition effects */
     margin-top: 10px; /* Spacing above button */
@@ -139,5 +158,5 @@
 /* Add to Cart Button Animation */
 .add-to-cart-btn:active {
     background-color: #1e7e34; /* Even darker green when pressed */
-    transform: scale(0.95); /* Slightly smaller on click for feedback */
+    transform: scale(0.95); /* Slightly smaller on click */
 }

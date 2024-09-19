@@ -9,16 +9,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: fadeIn 0.3s ease; /* Fade-in effect for overlay */
+}
+
+/* Keyframe for fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Cart Container */
 .cart-container {
   background-color: white;
   padding: 20px;
-  width: 320px; /* Increased width for better item display */
-  border-radius: 8px;
+  width: 350px; /* Increased width for better item display */
+  border-radius: 12px; /* Rounded corners for modern look */
   position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+  transition: transform 0.3s ease; /* Smooth transition effect */
+}
+
+.cart-container:hover {
+  transform: scale(1.02); /* Slightly scale up on hover */
 }
 
 /* Close Cart Button */
@@ -28,14 +44,21 @@
   right: 10px;
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 24px; /* Increased size for better visibility */
   cursor: pointer;
-  color: #e74c3c; /* Added color for better visibility */
+  color: #e74c3c; /* Color for better visibility */
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.close-cart:hover {
+  color: #c0392b; /* Darker red on hover */
 }
 
 /* Cart Items Section */
 .cart-items {
   margin-top: 20px;
+  max-height: 400px; /* Limit height for overflow */
+  overflow-y: auto; /* Enable scrolling for long lists */
 }
 
 /* Cart Item */
@@ -43,18 +66,24 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 15px 0; /* Increased padding for comfort */
   border-bottom: 1px solid #ddd; /* Border to separate items */
+  transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+.cart-item:hover {
+  background-color: #f9f9f9; /* Highlight on hover */
 }
 
 .cart-item img {
-  width: 60px; /* Adjusted width for better visual appeal */
-  height: 70px; /* Adjusted height to match image aspect */
+  width: 70px; /* Adjusted width for better visual appeal */
+  height: 80px; /* Adjusted height */
   object-fit: cover;
-  border-radius: 4px; /* Rounded corners for images */
+  border-radius: 8px; /* More pronounced rounded corners */
   margin-right: 15px; /* Increased margin for spacing */
 }
 
+/* Cart Item Details */
 .cart-item-details {
   flex: 1;
 }
@@ -67,6 +96,7 @@
 
 .cart-item-price {
   color: #e74c3c; /* Highlight color for price */
+  font-weight: bold; /* Make price more prominent */
 }
 
 .cart-item-quantity {
@@ -75,6 +105,7 @@
   margin-bottom: 5px; /* Added margin for spacing */
 }
 
+/* Cart Item Actions */
 .cart-item-actions {
   display: flex;
   align-items: center;
@@ -90,7 +121,7 @@
   font-size: 16px; /* Larger font size for visibility */
   padding: 8px 12px; /* Increased padding for button size */
   margin-left: 5px; /* Space between buttons */
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
 }
 
 .increment-btn:hover, .decrement-btn:hover {
@@ -107,7 +138,7 @@
   cursor: pointer;
   font-size: 16px; /* Larger font size for visibility */
   padding: 8px 12px; /* Increased padding for button size */
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
 }
 
 .remove-item-btn:hover {
@@ -118,11 +149,13 @@
 /* Cart Total */
 .cart-total {
   margin-top: 20px;
-  font-size: 18px;
+  font-size: 20px; /* Slightly larger for emphasis */
   font-weight: bold;
   text-align: right;
   color: #333; /* Dark color for better readability */
 }
+
+/* Place Order Button */
 .place-order-btn {
   background-color: #28a745; /* Green background */
   color: white;
@@ -131,10 +164,27 @@
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
   margin-top: 20px; /* Add some spacing above the button */
 }
 
 .place-order-btn:hover {
   background-color: #218838; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly larger on hover */
+}
+
+/* Place Order Button Animation */
+.place-order-btn:active {
+  background-color: #1e7e34; /* Even darker green when pressed */
+  transform: scale(0.95); /* Slightly smaller on click for feedback */
+}
+.total-amount {
+  text-align: center; /* Center the text */
+  margin: 20px 0; /* Add margin for spacing */
+}
+
+.place-order-btn {
+  display: block; /* Make the button block level */
+  width: 100%; /* Make the button take full width */
+  margin-top: 10px; /* Space above the button */
 }
