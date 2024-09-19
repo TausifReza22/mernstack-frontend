@@ -45,6 +45,7 @@ const Signup = ({ switchToLogin, onSignupSuccess }) => {
               required
             />
           </div>
+          
           <button className="but" type="submit">
             Sign Up
           </button>

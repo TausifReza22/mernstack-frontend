@@ -10,5 +10,3 @@ const WomenSection = () => {
 };
 
 export default WomenSection;
-
-

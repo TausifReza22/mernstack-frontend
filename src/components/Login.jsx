@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+
 import './AuthForm.css';
+
+
 
 const Login = ({ switchToSignup, onLoginSuccess }) => {
   const [email, setEmail] = useState('');
@@ -7,9 +10,19 @@ const Login = ({ switchToSignup, onLoginSuccess }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-  
-    const profile = { name: 'John Doe', email }; 
-    onLoginSuccess(profile); 
+    const profile = { name: 'Rohit', email };
+    onLoginSuccess(profile);
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const profile = { name: user.displayName, email: user.email };
+      onLoginSuccess(profile); // Send profile data to parent component
+    } catch (error) {
+      console.error('Google login failed:', error);
+    }
   };
 
   return (
@@ -35,10 +48,11 @@ const Login = ({ switchToSignup, onLoginSuccess }) => {
               required
             />
           </div>
-          <button className="but" type="submit">
-            Login
-          </button>
+          <button className="but" type="submit">Login</button>
         </form>
+        <button className="google-login-btn" onClick={handleGoogleLogin}>
+          Login with Google
+        </button>
         <p>
           Don't have an account? <a onClick={switchToSignup}>Sign Up</a>
         </p>
@@ -47,4 +61,6 @@ const Login = ({ switchToSignup, onLoginSuccess }) => {
   );
 };
 
-export default Login;
+export default Login;
+
+

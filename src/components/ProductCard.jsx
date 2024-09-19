@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./ProductCards.css";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Link } from "react-router-dom";
 import { useFilter } from "./FilterContext"; // Import useFilter from the correct path
 
 const ProductCards = () => {
-  const imageSize = { width: "150px", height: "150px" };
+  const imageSize = { width: "150px", height: "180px" };
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [focused, setOnFocused] = useState(true);
-
-  // console.log(products.products);
+  const { category } = useFilter(); // Access category from context
 
   useEffect(() => {
     fetchData();
@@ -26,10 +24,14 @@ const ProductCards = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get('https://mern-stack-backend-xzo3.onrender.com/getProducts');
-      console.log('responce data', response.data);
+      console.log('response data', response.data);
 
-      setProducts(response.data.products || []);
-      setFilteredProducts(response.data.products || []);
+      if (response.data && response.data.products) {
+        setProducts(response.data.products);
+        setFilteredProducts(response.data.products);
+      } else {
+        console.error('Response data mein products nahi hain');
+      }
     } catch (error) {
       console.error("Product list fetch karne mein error", error);
     }
@@ -37,9 +39,20 @@ const ProductCards = () => {
 
   const filterProducts = () => {
     const normalizedSearchText = searchText.toLowerCase();
-    setSearchText(normalizedSearchText);
+    const normalizedCategory = category?.toLowerCase(); // Normalize category value
 
-    const filteredData = products.products.filter((product) =>
+    console.log('Category:', normalizedCategory); // Debugging category
+    console.log('Search Text:', normalizedSearchText); // Debugging search text
+
+    // Filter by category
+    const categoryFilteredData = normalizedCategory === 'all' || !normalizedCategory
+      ? products
+      : products.filter((product) => product.category && product.category.toLowerCase() === normalizedCategory);
+
+    console.log('categoryFilteredData', categoryFilteredData); // Debugging filtered data
+
+    // Filter by search text
+    const searchFilteredData = categoryFilteredData.filter((product) =>
       product.name.toLowerCase().includes(normalizedSearchText)
     );
 
@@ -47,7 +60,8 @@ const ProductCards = () => {
 
     setFilteredProducts(searchFilteredData);
 
-    const suggestedData = products.products.filter((product) =>
+    // Suggest products based on search text
+    const suggestedData = categoryFilteredData.filter((product) =>
       product.name.toLowerCase().startsWith(normalizedSearchText)
     );
     setSuggestions(suggestedData.slice(0, 5));
@@ -70,14 +84,6 @@ const ProductCards = () => {
 
   const handleToggleBlur = () => {
     setOnFocused(false);
-  };
-
-  const addToCart = (product) => {
-    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    cartItems.push(product);
-    localStorage.setItem('cart', JSON.stringify(cartItems));
-
-    navigate('/cart'); // Redirect to cart page after adding the product
   };
 
   return (
@@ -107,31 +113,29 @@ const ProductCards = () => {
       </div>
 
       <div className="cardWrapper">
-        {Array.isArray(filteredProducts) && filteredProducts.length === 0 ? (
-          <h1>No Products found</h1>
+        {filteredProducts.length === 0 ? (
+          <h1>{searchText ? 'No Products found' : 'Loading...'}</h1>
         ) : (
-          Array.isArray(filteredProducts) && filteredProducts.map((product, index) => {
-            return (
-              <Link
-                key={index}
-                to={`/product/${product.id}`}
-                className="mainCard"
-              >
+          filteredProducts.map((product) => (
+            <Link
+              key={product._id} // Use unique id here
+              to={`/product/${product._id}`}
+              className="mainCard"
+            >
+              <div>
+                <img
+                  src={product?.image[0]}
+                  alt={product?.name}
+                  style={imageSize}
+                />
+                <h6>{product?.name}</h6>
+                <h4>$ {product?.price}</h4>
                 <div>
-                  <img
-                    src={product?.image[0]}
-                    alt={product?.name}
-                    style={imageSize}
-                  />
-                  <h6> {product?.name} </h6>
-                  <h4>$ {product?.price} </h4>
-                  <div>
-                    <span>{product?.description} </span>
-                  </div>
+                  <span>{product?.description}</span>
                 </div>
-              </Link>
-            );
-          })
+              </div>
+            </Link>
+          ))
         )}
       </div>
     </div>

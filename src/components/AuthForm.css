@@ -225,3 +225,44 @@
 .auth-form p a{
   color: #fc0000;
 }
+
+.google-login-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #db4437;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.google-login-btn:hover {
+  background-color: #c23321;
+}
+/* Add these styles to AuthForm.css or your main CSS file */
+
+.profile-welcome {
+  font-size: 18px;
+  color: red;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.logout-btn:hover {
+  background-color: #c82333;
+}
+

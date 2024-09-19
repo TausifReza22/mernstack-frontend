@@ -91,7 +91,6 @@ const Navbar = () => {
         </div>
       </nav>
 
-
         {showCart && <Cart closeCart={toggleCart} />}
         {showWishlist && <Wishlist closeWishlist={toggleWishlist} />}
 
@@ -118,6 +117,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-
