@@ -46,6 +46,8 @@ const Navbar = () => {
     setCategory(category); // Update the context
   };
 
+  connsole.log("Hello");
+
   return (
     <>
       <nav className="navbar">
