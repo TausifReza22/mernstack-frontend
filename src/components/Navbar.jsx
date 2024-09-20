@@ -46,6 +46,8 @@ const Navbar = () => {
     setCategory(category); // Update the context
   };
 
+  connsole.log("Hello");
+
   return (
     <>
       <nav className="navbar">
@@ -63,12 +65,12 @@ const Navbar = () => {
             <a className="nav-icon" onClick={toggleSearchBar}>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </a>
-            {showSearchBar && (
-              <div className="search-bar-container">
-                <input className="search-input" type="text" placeholder="Search..." />
-                <button className="search-button">Search</button>
-              </div>
-            )}
+            {/* {showSearchBar && (
+              // <div className="search-bar-container">
+              //   <input className="search-input" type="text" placeholder="Search..." />
+              //   <button className="search-button">Search</button>
+              // </div>
+            )} */}
             <a className="nav-icon" onClick={toggleCart}>
               <FontAwesomeIcon icon={faCartShopping} />
             </a>
